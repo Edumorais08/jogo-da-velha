@@ -1,0 +1,19 @@
+.X,
+.O {
+    width: 100px;
+    height: 100px;
+    border-radius: 10px;
+    flex-shrink: 0;
+    border: none;
+    font-size: 48px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.X {
+    background-color: #5D09F9;
+}
+
+.O {
+    background-color: #FF4747;
+}

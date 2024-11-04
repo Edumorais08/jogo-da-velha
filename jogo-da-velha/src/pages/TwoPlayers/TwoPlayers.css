@@ -1,0 +1,37 @@
+.container-TwoPlayers {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding-left: 60px;
+}
+
+.TwoPlayers {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+}
+
+.inputX {
+    color: #5D09F9
+}
+
+.inputO {
+    color: #FF4747;
+}
+
+.X2, 
+.O2 {
+    width: auto;
+    height: auto;
+    background-color: transparent;
+    font-size: 50px
+}
+
+.X2 {
+    color: #5D09F9;
+}
+
+.O2 {
+    color: #FF4747;
+}
