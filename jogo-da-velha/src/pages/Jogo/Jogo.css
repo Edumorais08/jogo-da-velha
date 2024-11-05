@@ -91,7 +91,7 @@ footer{
   color: var(--E-color);
 }
 
-button{
+.nova-partida{
   padding: 0.8rem 1rem;
   border: none;
   border-radius: 5px;
@@ -101,3 +101,21 @@ button{
   font-size: 1.2rem;
   margin-bottom: 2rem;
 }
+
+.voltar {
+  position: absolute;
+  width: 178px;
+  height: 50px;
+  top: 30px;
+  left: 35px;
+}
+
+.reiniciar {
+  position: absolute;
+  width: 173px;
+  height: 81px;
+  top: 30px;
+  right: 15px;  
+}
+
+

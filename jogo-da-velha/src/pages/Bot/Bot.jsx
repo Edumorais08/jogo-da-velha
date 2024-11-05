@@ -1,9 +1,9 @@
 import {useEffect, useState} from 'react';
-import './jogo.css';
+import './Bot.css';
 import VoltarButton from "../../components/botaoVoltar/botaoVoltar";
 import ReiniciarButton from '../../components/botaoReiniciar/botaoReiniciar';
 
-function Jogo() {
+function Bot() {
 
   const emptyBoard = Array(9).fill(""); //cria um array com 9 posições vazias
   const [board, setBoard] = useState(emptyBoard); //cria um estado para o board
@@ -12,22 +12,43 @@ function Jogo() {
   const [winsX, setWinsX] = useState(0);
   const [winsO,setWinsO] = useState(0);
 
-
   const handleCellClick = (index) => {
-    if (winner) { //se tiver um ganhador não pode mais jogar
+    if (winner || currentPlayer === 'O' || board[index] !== "") {
+      // Se houver um vencedor, ou for a vez do bot ('O'), ou a célula já estiver preenchida, não permite a jogada
       return;
     }
+  
+    let newBoard = [...board];
+    newBoard[index] = currentPlayer;
+    setBoard(newBoard);
+    setCurrentPlayer('O'); // Troca para o bot após a jogada do jogador
+  };
 
-    if (board[index] !== "") { //se a celula está vazia pode clicar, se não não pode
-      return;
-    }
-
-    let newBoard = [...board];  //cria um novo array com o board atual
-    newBoard[index] = currentPlayer; //coloca o currentPlayer na posição clicada
-    setBoard(newBoard); //atualiza o board
-
-    setCurrentPlayer(currentPlayer === 'X' ? 'O' : 'X'); //se for X muda pra O, se for O muda pra X
+  function botMove(board) {  //função para o bot jogar
+    const availableCells = board
+      .map((cell, index) => (cell === "" ? index : null))
+      .filter(index => index !== null);
+  
+    const randomIndex = Math.floor(Math.random() * availableCells.length);
+    return availableCells[randomIndex];
   }
+
+  const botPlay = () => { 
+    const botIndex = botMove(board);
+    const newBoard = [...board];
+    newBoard[botIndex] = 'O';
+    setBoard(newBoard);
+    setCurrentPlayer('X');
+  };
+
+  useEffect(() => {
+    checkWinner();
+    
+    if (!winner && currentPlayer === 'O') {
+      const botTimeout = setTimeout(botPlay, 500); // bot joga apenas se não houver vencedor
+      return () => clearTimeout(botTimeout); // Limpa o timeout se o componente desmontar
+    }
+  }, [board, winner]); // 'winner' como dependência
 
   const checkWinner = () => {
     const possibleWaysToWin = [  //possibilidades de ganhar
@@ -81,17 +102,15 @@ function Jogo() {
   }
 
   const [nomeP1, setNomeP1] = useState('');
-  const [nomeP2, setNomeP2] = useState('');
 
     useEffect(() => {
         // Recupera o valor de 'client' do localStorage
-        const savedNomes = JSON.parse(localStorage.getItem('client'));
-        if (savedNomes) {
-            setNomeP1(savedNomes.player1[savedNomes.player1.length - 1]); 
-            setNomeP2(savedNomes.player2[savedNomes.player2.length - 1]);
+        const savedNomeP1 = JSON.parse(localStorage.getItem('client'));
+        if (savedNomeP1) {
+            setNomeP1(savedNomeP1[savedNomeP1.length - 1]); // Obtém o último nome salvo
         }
     }, []);
-  
+
   return (
     <main>
       <h1 className='tittle'>Jogo da Velha</h1>
@@ -106,10 +125,11 @@ function Jogo() {
 
       <div className='score'>
         <p>Vitórias {nomeP1}: {winsX}</p>
-        <p>Vitórias {nomeP2}: {winsO}</p>
+        <p>Vitórias Bot: {winsO}</p>
       </div>
 
-      <div className={`board ${winner ? "game-over" : ""}`}> 
+
+        <div className={`board ${winner ? "game-over" : ""}`}> 
         {board.map((item, index) => ( 
           <div
             key={index}
@@ -119,9 +139,9 @@ function Jogo() {
             {item}
           </div>
         ))}
-      </div> 
+        </div>
 
-      {winner &&    //não mostar a  msg de winner desde o começo
+     {winner &&    //não mostar a  msg de winner desde o começo
         <footer> 
           {winner === 'E' ?  //se for empate mostra a msg de empate, se não mostra a msg de quem ganhou
             <h2 className='winner-message'> 
@@ -132,9 +152,11 @@ function Jogo() {
               <span className={winner}>{winner} </span> ganhou!
             </h2>
           }
-          <button className='nova-partida'  onClick={resetGame}>Nova Partida!</button>
+
+          <button className='nova-partida' onClick={resetGame}>Nova Partida!</button>
         </footer>
       }
+  
     </main>
   );
-}export default Jogo;
+}export default Bot;

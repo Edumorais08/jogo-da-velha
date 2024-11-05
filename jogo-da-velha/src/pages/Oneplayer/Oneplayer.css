@@ -24,3 +24,11 @@
 .xOUo {
     gap: 108px;
 }
+
+.voltar {
+    position: absolute;
+    width: 178px;
+    height: 50px;
+    top: 30px;
+    left: 35px;
+  }

@@ -1,19 +1,19 @@
-import "../../components/botao/botao.css"
+import "../../components/botaoVoltar/botaoVoltar.css"
 import { Link } from "react-router-dom"
 import PropTypes from "prop-types";
 
-function ConfirmationButton(props){
+function  VoltarButton(props){
     return(
         <Link to={props.link}>
-            <button className="confirmation-button" >{props.content}</button>
+            <button className="voltar-button" >{props.content}</button>
         </Link> 
     );
 }
 
-ConfirmationButton.propTypes = {
+VoltarButton.propTypes = {
     link: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired,
 };
 
 
-export default ConfirmationButton
+export default VoltarButton

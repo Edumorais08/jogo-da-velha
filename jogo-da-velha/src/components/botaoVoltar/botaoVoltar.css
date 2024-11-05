@@ -1,0 +1,15 @@
+.voltar-button{
+    width: 150px;
+    height: 30px;
+    padding: 30px;
+    border-radius: 30px;
+    flex-shrink: 0;
+    background-color: #FF4747;
+    border: none;
+    font-size: 40px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
