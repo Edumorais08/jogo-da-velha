@@ -2,6 +2,9 @@ import {useEffect, useState} from 'react';
 import './Bot.css';
 import VoltarButton from "../../components/botaoVoltar/botaoVoltar";
 import ReiniciarButton from '../../components/botaoReiniciar/botaoReiniciar';
+import ImagemEmpate from '../../images/ImagemEmpate.png'
+import ImagemVitoria from '../../images/ImagemVitoria.png'
+
 
 function Bot() {
 
@@ -11,17 +14,25 @@ function Bot() {
   const [winner, setWinner] = useState(null); //cria um estado para o ganhador
   const [winsX, setWinsX] = useState(0);
   const [winsO,setWinsO] = useState(0);
+  const playerSymbol = localStorage.getItem('playerSymbol') || 'X'; // Símbolo do jogador
+  const botSymbol = playerSymbol === 'X' ? 'O' : 'X'; // Símbolo do bot é o oposto
+  
+
+  useEffect(() => {
+    const savedNomeP1 = JSON.parse(localStorage.getItem('client'));
+    if (savedNomeP1) {
+      setNomeP1(savedNomeP1[savedNomeP1.length - 1]);
+    }
+    setCurrentPlayer(playerSymbol);
+  }, []);
 
   const handleCellClick = (index) => {
-    if (winner || currentPlayer === 'O' || board[index] !== "") {
-      // Se houver um vencedor, ou for a vez do bot ('O'), ou a célula já estiver preenchida, não permite a jogada
-      return;
-    }
-  
-    let newBoard = [...board];
+    if (winner || currentPlayer === botSymbol || board[index] !== "") return;
+    
+    const newBoard = [...board];
     newBoard[index] = currentPlayer;
     setBoard(newBoard);
-    setCurrentPlayer('O'); // Troca para o bot após a jogada do jogador
+    setCurrentPlayer(botSymbol);
   };
 
   function botMove(board) {  //função para o bot jogar
@@ -33,24 +44,24 @@ function Bot() {
     return availableCells[randomIndex];
   }
 
-  const botPlay = () => { 
+  const botPlay = () => {
     const botIndex = botMove(board);
     const newBoard = [...board];
-    newBoard[botIndex] = 'O';
+    newBoard[botIndex] = botSymbol;
     setBoard(newBoard);
-    setCurrentPlayer('X');
+    setCurrentPlayer(playerSymbol);
   };
 
   useEffect(() => {
-    checkWinner();
+    checkWinner(nomeP1);
     
-    if (!winner && currentPlayer === 'O') {
-      const botTimeout = setTimeout(botPlay, 500); // bot joga apenas se não houver vencedor
-      return () => clearTimeout(botTimeout); // Limpa o timeout se o componente desmontar
+    if (!winner && currentPlayer === botSymbol) {
+      const botTimeout = setTimeout(botPlay, 500);
+      return () => clearTimeout(botTimeout);
     }
-  }, [board, winner]); // 'winner' como dependência
+  }, [board, winner, currentPlayer]);
 
-  const checkWinner = () => {
+  const checkWinner = (playerName) => {
     const possibleWaysToWin = [  //possibilidades de ganhar
       [board [0], board[1], board[2]], //linhas
       [board [3], board[4], board[5]], 
@@ -65,12 +76,12 @@ function Bot() {
     ];
     
     for (const cells of possibleWaysToWin) {
-      if (cells.every((item) => item === 'X')) {
-        setWinner('X');
+      if (cells.every((item) => item === playerSymbol)) {
+        setWinner(playerName);
         return;
       }
-      if (cells.every((item) => item === 'O')) {
-        setWinner('O');
+      if (cells.every((item) => item === botSymbol)) {
+        setWinner('Bot');
         return;
       }
     }
@@ -85,15 +96,15 @@ function Bot() {
 
   //Adiciona um a cada vitoria de um dos jogadores 
   useEffect(() => {
-    if (winner === 'X') setWinsX(winsX + 1); // adiciona um ao numero de vitorias do X
-    if (winner === 'O') setWinsO(winsO + 1); // adiciona um ao numero de vitorias do O
+    if (winner === nomeP1) setWinsX(winsX + 1); // adiciona um ao numero de vitorias do X
+    if (winner === 'Bot') setWinsO(winsO + 1); // adiciona um ao numero de vitorias do O
   }, [winner]);
 
-  const resetGame = () => {  //função para recomeçar o jogo
-    setCurrentPlayer('X');   //reinicia o jogo com o jogador X começando
+  const resetGame = () => {
+    setCurrentPlayer(playerSymbol);
     setBoard(emptyBoard);
     setWinner(null);
-  }
+  };
 
   const resetScore = () => {
     setWinsX(0);
@@ -104,16 +115,21 @@ function Bot() {
   const [nomeP1, setNomeP1] = useState('');
 
     useEffect(() => {
-        // Recupera o valor de 'client' do localStorage
+      
         const savedNomeP1 = JSON.parse(localStorage.getItem('client'));
+        const savedSymbol = localStorage.getItem('playerSymbol');
         if (savedNomeP1) {
-            setNomeP1(savedNomeP1[savedNomeP1.length - 1]); // Obtém o último nome salvo
+            setNomeP1(savedNomeP1[savedNomeP1.length - 1]); 
+        }
+        if (savedSymbol) {
+          setCurrentPlayer(savedSymbol);
         }
     }, []);
 
   return (
     <main>
       <h1 className='tittle'>Jogo da Velha</h1>
+      {/* <h2>{savedSymbol}</h2> */}
 
       <div className='voltar'>
         <VoltarButton link= "/" content="Voltar"/>
@@ -148,9 +164,12 @@ function Bot() {
               <span className={winner}>Empate!</span>
             </h2>
           :
+          <>
             <h2 className='winner-message'> 
               <span className={winner}>{winner} </span> ganhou!
             </h2>
+            <img className='ImagemVitoria' src={ImagemVitoria} alt=""/>
+          </>
           }
 
           <button className='nova-partida' onClick={resetGame}>Nova Partida!</button>

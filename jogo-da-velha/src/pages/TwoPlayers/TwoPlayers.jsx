@@ -57,7 +57,7 @@ function TwoPlayers(){
                         <XOUBola content="O" classe="O O2"/>
                     </div>
                 </div>
-                <ConfirmationButton link="/jogo" content="Confirmar"/>
+                <ConfirmationButton link="/jogo" content="Confirmar" disabled={!nomeP1 || !nomeP2}/>
             </section>  
 
         </>

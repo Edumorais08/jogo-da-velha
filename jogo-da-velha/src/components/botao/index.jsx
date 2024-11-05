@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 function ConfirmationButton(props){
     return(
         <Link to={props.link}>
-            <button className="confirmation-button" >{props.content}</button>
+            <button className="confirmation-button" disabled={props.disabled}>{props.content}</button>
         </Link> 
     );
 }
