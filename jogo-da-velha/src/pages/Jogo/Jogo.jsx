@@ -7,6 +7,9 @@ function Jogo() {
   const [board, setBoard] = useState(emptyBoard); //cria um estado para o board
   const [currentPlayer, setCurrentPlayer] = useState('X'); //cria um estado para o jogador atual
   const [winner, setWinner] = useState(null); //cria um estado para o ganhador
+  const [winsX, setWinsX] = useState(0);
+  const [winsO,setWinsO] = useState(0);
+
 
   const handleCellClick = (index) => {
     if (winner) { //se tiver um ganhador não pode mais jogar
@@ -37,7 +40,6 @@ function Jogo() {
       [board [0], board[4], board[8]], //diagonais
       [board [2], board[4], board[6]],
     ];
-
     
     possibleWaysToWin.forEach((cells) => { //verifica se tem um ganhador
       if (cells.every(item => item === 'X')) setWinner('X');
@@ -55,15 +57,27 @@ function Jogo() {
 
   useEffect(checkWinner, [board]); // Chama checkWinner toda vez que o board mudar para verificar se tem um ganhador
 
+  //Adiciona um a cada vitoria de um dos jogadores 
+  useEffect(() => {
+    if (winner === 'X') setWinsX(winsX + 1); // adiciona um ao numero de vitorias do X
+    if (winner === 'O') setWinsO(winsO + 1); // adiciona um ao numero de vitorias do O
+  }, [winner]);
+
   const resetGame = () => {  //função para recomeçar o jogo
     setCurrentPlayer('X');   //reinicia o jogo com o jogador X começando
     setBoard(emptyBoard);
     setWinner(null);
   }
-
   return (
     <main>
       <h1 className='tittle'>Jogo da Velha</h1>
+      {/* <button className='voltar'>
+        <p>Voltar</p>
+      </button> */}
+      <div className='score'>
+        <p>Vitórias X: {winsX}</p>
+        <p>Vitórias O: {winsO}</p>
+      </div>
 
       <div className={`board ${winner ? "game-over" : ""}`}> 
         {board.map((item, index) => ( 
