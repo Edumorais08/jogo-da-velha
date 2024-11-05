@@ -117,20 +117,14 @@ function Bot() {
     useEffect(() => {
       
         const savedNomeP1 = JSON.parse(localStorage.getItem('client'));
-        const savedSymbol = localStorage.getItem('playerSymbol');
         if (savedNomeP1) {
             setNomeP1(savedNomeP1[savedNomeP1.length - 1]); 
-        }
-        if (savedSymbol) {
-          setCurrentPlayer(savedSymbol);
         }
     }, []);
 
   return (
     <main>
       <h1 className='tittle'>Jogo da Velha</h1>
-      {/* <h2>{savedSymbol}</h2> */}
-
       <div className='voltar'>
         <VoltarButton link= "/" content="Voltar"/>
       </div>
@@ -160,15 +154,20 @@ function Bot() {
      {winner &&    //não mostar a  msg de winner desde o começo
         <footer> 
           {winner === 'E' ?  //se for empate mostra a msg de empate, se não mostra a msg de quem ganhou
+            <div className='container-message'>
             <h2 className='winner-message'> 
               <span className={winner}>Empate!</span>
             </h2>
+            <img className='ImagemEmpate imagem' src={ImagemEmpate} alt=""/>
+            </div>
           :
           <>
+            <div className='container-message'>
             <h2 className='winner-message'> 
               <span className={winner}>{winner} </span> ganhou!
             </h2>
-            <img className='ImagemVitoria' src={ImagemVitoria} alt=""/>
+            <img className='ImagemVitoria imagem' src={ImagemVitoria} alt=""/>
+            </div>
           </>
           }
 

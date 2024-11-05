@@ -13,11 +13,11 @@
 }
 
 .inputX {
-    color: #5D09F9
+    color: #FF4747;
 }
 
 .inputO {
-    color: #FF4747;
+    color: #5D09F9;
 }
 
 .X2, 
@@ -29,11 +29,11 @@
 }
 
 .X2 {
-    color: #5D09F9;
+    color: #FF4747;
 }
 
 .O2 {
-    color: #FF4747;
+    color: #5D09F9;
 }
 
 .voltar {

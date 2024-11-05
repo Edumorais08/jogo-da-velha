@@ -17,3 +17,7 @@
 .O {
     background-color: #5D09F9;
 }
+
+button.selected {
+    border: #fff 3px solid;
+  }

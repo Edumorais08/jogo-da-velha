@@ -81,6 +81,7 @@
   
   .winner-message{
     margin: 2rem;
+    font-size: 2rem;
   }
   
   .winner-message span.O{
@@ -129,8 +130,15 @@
     right: 15px;  
   }
 
-
-
+  .container-message {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 15px;
+    padding-bottom: 15px;
+  }
 
 
     

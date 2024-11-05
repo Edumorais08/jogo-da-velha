@@ -2,6 +2,8 @@ import {useEffect, useState} from 'react';
 import './jogo.css';
 import VoltarButton from "../../components/botaoVoltar/botaoVoltar";
 import ReiniciarButton from '../../components/botaoReiniciar/botaoReiniciar';
+import ImagemEmpate from '../../images/ImagemEmpate.png'
+import ImagemVitoria from '../../images/ImagemVitoria.png'
 
 function Jogo() {
 
@@ -124,15 +126,24 @@ function Jogo() {
       {winner &&    //não mostar a  msg de winner desde o começo
         <footer> 
           {winner === 'E' ?  //se for empate mostra a msg de empate, se não mostra a msg de quem ganhou
+            <div className='container-message'>
             <h2 className='winner-message'> 
               <span className={winner}>Empate!</span>
             </h2>
+            <img className='ImagemEmpate imagem' src={ImagemEmpate} alt=""/>
+            </div>
           :
+          <>
+            <div className='container-message'>
             <h2 className='winner-message'> 
-              <span className={winner}>{winner} </span> ganhou!
+              <span>{winner === 'X' ? nomeP1 : nomeP2}</span> ganhou!
             </h2>
+            <img className='ImagemVitoria imagem' src={ImagemVitoria} alt=""/>
+            </div>
+          </>
           }
-          <button className='nova-partida'  onClick={resetGame}>Nova Partida!</button>
+
+          <button className='nova-partida' onClick={resetGame}>Nova Partida!</button>
         </footer>
       }
     </main>

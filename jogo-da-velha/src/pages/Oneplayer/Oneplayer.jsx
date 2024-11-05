@@ -4,13 +4,13 @@ import "../../components/xOUbola/xOUbola.css"
 import "./OnePlayer.css";
 import { useState, useEffect } from "react"
 import VoltarButton from "../../components/botaoVoltar/botaoVoltar";
-import { useNavigate } from "react-router-dom";
 
 
 function OnePlayer(){
     const [nomeP1, setNomeP1] = useState('');
     const [saveNomeP1, setSaveNomeP1] = useState([])
-    const [playerSymbol, setPlayerSymbol] = useState('X');
+    const [playerSymbol, setPlayerSymbol] = useState('');
+    const [selectedSymbol, setSelectedSymbol] = useState('');
 
     const handleChange = (event) => {
         setNomeP1(event.target.value);
@@ -18,6 +18,7 @@ function OnePlayer(){
 
     const handleSymbolChange = (symbol) => {
         setPlayerSymbol(symbol);
+        setSelectedSymbol(symbol);
     };
 
     useEffect( () => {
@@ -39,10 +40,10 @@ function OnePlayer(){
                 </div>
                 <input type="text" placeholder="Cadastre o P1" className="input" onChange={handleChange} value={nomeP1}/>
                 <div className="botoes-home xOUo">
-                    <XOUBola content="X" classe="X" onClick={() => handleSymbolChange('X')}/>
-                    <XOUBola content="O" classe="O" onClick={() => handleSymbolChange('O')}/>
+                    <XOUBola content="X" classe="X" onClick={handleSymbolChange} isSelected={selectedSymbol === 'X'}/>
+                    <XOUBola content="O" classe="O" onClick={handleSymbolChange} isSelected={selectedSymbol === 'O'}/>
                 </div>
-                <ConfirmationButton link="/Bot" content="Confirmar" disabled={!nomeP1}/>
+                <ConfirmationButton link="/Bot" content="Confirmar" disabled={!nomeP1 || !playerSymbol}/>
             </section> 
         </>
     );
