@@ -1,5 +1,5 @@
 import ConfirmationButton from "../../components/botao/index";
-import XOUBola from "../../components/xOUbola/xOUbola";
+import XOUBola from "../../components/XOUBola/XOUBola";
 import "../../components/xOUbola/xOUbola.css"
 import "./OnePlayer.css";
 import { useState, useEffect } from "react"
