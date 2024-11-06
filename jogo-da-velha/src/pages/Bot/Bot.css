@@ -140,5 +140,13 @@
     padding-bottom: 15px;
   }
 
+  .ImagemVitoria, .ImagemEmpate{
+    position: absolute;
+    width: 500px;
+    height: 530px;
+    top: 80px
+
+  }
+
 
     
