@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import './jogo.css';
+import './Jogo.css';
 import VoltarButton from "../../components/botaoVoltar/botaoVoltar";
 import ReiniciarButton from '../../components/botaoReiniciar/botaoReiniciar';
 import ImagemEmpate from '../../images/ImagemEmpate.png'
