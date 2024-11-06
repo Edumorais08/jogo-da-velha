@@ -1,7 +1,7 @@
 import ConfirmationButton from "../../components/botao/index";
 import XOUBola from "../../components/xOUbola/XOUBola";
 import "../../components/xOUbola/xOUbola.css"
-import "./OnePlayer.css";
+import "./Oneplayer.css";
 import { useState, useEffect } from "react"
 import VoltarButton from "../../components/botaoVoltar/botaoVoltar";
 
