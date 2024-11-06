@@ -1,4 +1,4 @@
-import XOUBola from "../../components/xOUbola/xOUbola";
+import XOUBola from "../../components/xOUbola/XOUBola";
 import ConfirmationButton from "../../components/botao";
 import "./TwoPlayers.css"
 import { useState, useEffect } from "react"

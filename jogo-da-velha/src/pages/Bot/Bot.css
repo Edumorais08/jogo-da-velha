@@ -82,6 +82,7 @@
   .winner-message{
     margin: 2rem;
     font-size: 2rem;
+    padding-top: 10px;
   }
   
   .winner-message span.O{
